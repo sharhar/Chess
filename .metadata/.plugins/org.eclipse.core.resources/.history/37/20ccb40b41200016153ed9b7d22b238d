@@ -1,0 +1,22 @@
+package main;
+
+import client.Client;
+import server.Server;
+
+public class Main {
+	public static Client client;
+	public static Server server;
+	
+	public static void main(String[] args) {
+		server = new Server(52000);
+		server.start();
+		
+		client = new Client("localhost", 52000);
+		client.start();
+		
+		Thread.sleep(10);
+		
+		client.sendData("PING");
+		server.sendToAll("PONG");
+	}
+}

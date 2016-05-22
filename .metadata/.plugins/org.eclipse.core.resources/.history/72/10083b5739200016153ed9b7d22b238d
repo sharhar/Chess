@@ -1,0 +1,13 @@
+package server;
+
+import java.net.Socket;
+
+public class ServerClient {
+	
+	Socket socket;
+	
+	public void sendData(String data) {
+		
+	}
+	
+}

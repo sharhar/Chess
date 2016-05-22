@@ -1,0 +1,9 @@
+package server;
+
+public class Server {
+	
+	List<ServerClient> clients = new ArrayList<ServerClient>;
+	
+	
+	
+}

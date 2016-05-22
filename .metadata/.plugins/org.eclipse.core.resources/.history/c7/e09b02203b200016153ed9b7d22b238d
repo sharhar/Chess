@@ -1,0 +1,19 @@
+package server;
+
+import java.net.ServerSocket;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Server implements Runnable{
+	
+	List<ServerClient> clients = new ArrayList<ServerClient>();
+	ServerSocket socket;
+	
+	public Server(int port) {
+		
+	}
+	
+	public void run() {
+		
+	}
+}

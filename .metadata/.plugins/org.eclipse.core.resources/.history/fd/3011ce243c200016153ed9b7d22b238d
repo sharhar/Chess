@@ -1,0 +1,24 @@
+package client;
+
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client implements Runnable{
+	Socket socket;
+	
+	public Client(String address, int port) {
+		try {
+			socket = new Socket(address, port);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void run() {
+		
+		
+	}
+}

@@ -1,0 +1,14 @@
+package server;
+
+import java.io.PrintWriter;
+import java.net.Socket;
+
+public class ServerClient {
+	
+	Socket socket;
+	
+	public void sendData(String data) {
+		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+	}
+	
+}

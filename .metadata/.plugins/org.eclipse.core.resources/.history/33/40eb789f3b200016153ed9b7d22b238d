@@ -1,0 +1,48 @@
+package server;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Server implements Runnable{
+	
+	List<ServerClient> clients = new ArrayList<ServerClient>();
+	ServerSocket server;
+	Thread thread;
+	boolean on;
+	
+	public Server(int port) {
+		try {
+			server = new ServerSocket(port);
+		} catch (IOException e) {
+			System.err.println("Couln't creat server on port " + port);
+			e.printStackTrace();
+		}
+		
+		thread = new Thread(this);
+	}
+	
+	public void start() {
+		on = true;
+		thread.start();
+	}
+	
+	public void run() {
+		while(on) {
+			try {
+				Socket clientSocket = server.accept();
+				ServerClient client = new ServerClient(clientSocket);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
