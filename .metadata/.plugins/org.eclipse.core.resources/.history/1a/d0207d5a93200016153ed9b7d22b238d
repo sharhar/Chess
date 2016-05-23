@@ -1,0 +1,13 @@
+package main;
+
+import javax.swing.JFrame;
+
+public class GameWindow {
+	
+	public JFrame frame;
+	
+	public GameWindow() {
+		frame = new JFrame();
+	}
+	
+}

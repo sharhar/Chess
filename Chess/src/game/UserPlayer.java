@@ -6,7 +6,11 @@ public class UserPlayer extends Player{
 		super(address, port);
 	}
 
-	public void move() {
+	public int[] move() {
 		
+		
+		int[] result = {0,0,0,0};
+		
+		return result;
 	}
 }

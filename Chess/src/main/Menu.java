@@ -3,8 +3,13 @@ package main;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+
+import game.AIPlayer;
+import game.UserPlayer;
+import main.uis.CreateGame;
+import main.uis.JoinGame;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,7 +36,11 @@ public class Menu extends JFrame {
 		JButton btnVersusAi = new JButton("Versus AI");
 		btnVersusAi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("AI");
+				Main.startServer(52000);
+				Main.players.add(new UserPlayer("localhost", 52000));
+				Main.players.add(new AIPlayer("localhost", 52000));
+				new GameWindow();
+				dispose();
 			}
 		});
 		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
@@ -40,15 +49,20 @@ public class Menu extends JFrame {
 		JButton btnLocalMultiplayer = new JButton("Local Multiplayer");
 		btnLocalMultiplayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Local Multiplayer");
+				Main.startServer(52000);
+				Main.players.add(new UserPlayer("localhost", 52000));
+				Main.players.add(new UserPlayer("localhost", 52000));
+				new GameWindow();
+				dispose();
 			}
 		});
 		contentPane.add(btnLocalMultiplayer);
 		
-		JButton btnCreateServer = new JButton("Create Server");
+		JButton btnCreateServer = new JButton("Create Online game");
 		btnCreateServer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Server");
+				new CreateGame();
+				dispose();
 			}
 		});
 		contentPane.add(btnCreateServer);
@@ -56,7 +70,8 @@ public class Menu extends JFrame {
 		JButton btnJoinOnlineGame = new JButton("Join Online Game");
 		btnJoinOnlineGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Connect");
+				new JoinGame();
+				dispose();
 			}
 		});
 		contentPane.add(btnJoinOnlineGame);

@@ -1,0 +1,7 @@
+package input;
+
+import java.awt.event.MouseListener;
+
+public class Mouse implements MouseListener{
+
+}

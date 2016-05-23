@@ -1,0 +1,13 @@
+package game;
+
+public class Board {
+	public volatile Piece[][] pieces = new Piece[8][8];
+	public int num;
+	
+	public Board(int num) {
+		this.num = num;
+		
+		pieces[0][0] = null;
+	}
+	
+}

@@ -1,0 +1,23 @@
+package game;
+
+public class Board {
+	enum Piece {
+		PAWN, ROOK, KNIGHT, BISHOP, QUEEN, KING
+	}
+	
+	public volatile Piece[][] pieces = new Piece[8][8];
+	public int num;
+	
+	public Board(int num) {
+		this.num = num;
+		
+		for(int i = 0; i < 8;i++) {
+			for(int j = 0; j < 8;j++) {
+				pieces[i][j] = null;
+			}
+		}
+		
+		
+	}
+	
+}

@@ -15,6 +15,8 @@ public class Server implements Runnable{
 	int clientNum = 0;
 	
 	public Server(int port) {
+		ServerClient.server = this;
+		
 		try {
 			server = new ServerSocket(port);
 		} catch (IOException e) {
@@ -53,6 +55,16 @@ public class Server implements Runnable{
 				client.start();
 				clients.add(client);
 				clientNum++;
+				
+				if(clientNum == 2) {
+					try {
+						Thread.sleep(15);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					System.out.println("Starting game...");
+					sendToAll("START");
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

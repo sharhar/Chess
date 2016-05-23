@@ -1,0 +1,124 @@
+package main;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import game.Piece;
+import game.Player;
+
+public class GameWindow extends JPanel{
+	private static final long serialVersionUID = -3890124326645924014L;
+	
+	public JFrame frame;
+	public Player player;
+	public BufferedImage bg;
+	public BufferedImage spriteSheet;
+	public Piece[][] pieces = new Piece[8][8];
+	public BufferedImage[] pieceImages = new BufferedImage[12];
+	
+	private void createBG() {
+		int white = 0xffffff;
+		int black = 0x000000;
+		
+		for(int i = 0;i < 8;i++) {
+			for(int j = 0;j < 8;j++) {
+				bg.setRGB(i, j, black);
+			}
+		}
+		
+		bg.setRGB(0, 1, white);
+		bg.setRGB(0, 3, white);
+		bg.setRGB(0, 5, white);
+		bg.setRGB(0, 7, white);
+		
+		bg.setRGB(2, 1, white);
+		bg.setRGB(2, 3, white);
+		bg.setRGB(2, 5, white);
+		bg.setRGB(2, 7, white);
+		
+		bg.setRGB(4, 1, white);
+		bg.setRGB(4, 3, white);
+		bg.setRGB(4, 5, white);
+		bg.setRGB(4, 7, white);
+		
+		bg.setRGB(6, 1, white);
+		bg.setRGB(6, 3, white);
+		bg.setRGB(6, 5, white);
+		bg.setRGB(6, 7, white);
+		
+		bg.setRGB(1, 0, white);
+		bg.setRGB(1, 2, white);
+		bg.setRGB(1, 4, white);
+		bg.setRGB(1, 6, white);
+		
+		bg.setRGB(3, 0, white);
+		bg.setRGB(3, 2, white);
+		bg.setRGB(3, 4, white);
+		bg.setRGB(3, 6, white);
+		
+		bg.setRGB(5, 0, white);
+		bg.setRGB(5, 2, white);
+		bg.setRGB(5, 4, white);
+		bg.setRGB(5, 6, white);
+		
+		bg.setRGB(7, 0, white);
+		bg.setRGB(7, 2, white);
+		bg.setRGB(7, 4, white);
+		bg.setRGB(7, 6, white);
+	}
+	
+	private void getPieceImages() {
+		for(int i = 0;i < 12;i++) {
+			int x = i%6;
+			int y = i/6.0;
+		}
+	}
+	
+	public GameWindow() {
+		frame = new JFrame("Chess");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(this);
+		frame.getContentPane().setPreferredSize(new Dimension(600, 800));
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		
+		player = Main.players.get(0);
+		
+		bg = new BufferedImage(8, 8, BufferedImage.TYPE_INT_RGB);
+		try {
+			spriteSheet = ImageIO.read(GameWindow.class.getResourceAsStream("/pieces.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		createBG();
+		getPieceImages();
+	}
+	
+	public BufferedImage getPieceImage(Piece piece) {
+		return null;
+	}
+	
+	public void drawBoard() {
+		System.arraycopy(player.board.pieces, 0, pieces, 0, 8);
+		
+		
+	}
+	
+	public void paintComponent(Graphics g) {
+		g.setColor(new Color(148, 74, 0));
+		g.fillRect(0, 0, 600, 600);
+		g.setColor(new Color(176, 108, 40));
+		g.fillRect(12, 12, 576, 576);
+		g.drawImage(bg, 20, 20, 560, 560, null);
+		drawBoard();
+		repaint();
+	}
+}

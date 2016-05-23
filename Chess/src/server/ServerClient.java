@@ -15,6 +15,7 @@ public class ServerClient implements Runnable{
 	BufferedReader in;
 	boolean ready = false;
 	int num;
+	public static Server server;
 	
 	public ServerClient(Socket socket, int num) {
 		System.out.println("New client at " + socket.getInetAddress().toString());
@@ -55,6 +56,8 @@ public class ServerClient implements Runnable{
 				String input = in.readLine();
 				if(input.equals("CONNECT")) {
 					sendData("CONNECT " + num);
+				} else if(input.startsWith("MOVE ")) {
+					server.sendToAll(input);
 				}
 			} catch (IOException e) {
 				System.out.println("Could not connect to client " + socket.getInetAddress().toString());

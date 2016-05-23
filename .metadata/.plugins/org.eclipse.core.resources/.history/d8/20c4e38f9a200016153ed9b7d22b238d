@@ -1,0 +1,23 @@
+package game;
+
+public class Board {
+	enum Piece {
+		W_PAWN, W_ROOK, W_KNIGHT, W_BISHOP, W_QUEEN, W_KING, 
+		B_PAWN, B_ROOK, B_KNIGHT, B_BISHOP, B_QUEEN, B_KING, 
+		NOTHING
+	}
+	
+	public volatile Piece[][] pieces = new Piece[8][8];
+	public int num;
+	
+	public void resetBoard() {
+		
+	}
+	
+	public Board(int num) {
+		this.num = num;
+		
+		
+	}
+	
+}

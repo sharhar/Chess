@@ -1,0 +1,15 @@
+package game;
+
+public class Piece {
+	
+	
+	
+	public int x, y;
+	public int type;
+	
+	public Piece(int type, int x, int y) {
+		this.type = type;
+		this.x = x;
+		this.y = y;
+	}
+}
