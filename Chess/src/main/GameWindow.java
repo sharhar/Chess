@@ -26,6 +26,7 @@ public class GameWindow extends JPanel{
 	public static int moving = 0;
 	public static int px = -1, py = -1;
 	public static int mx = -1, my = -1;
+	public static volatile boolean[][] options = new boolean[8][8];
 	
 	private void createBG() {
 		int white = 0xffffff;
@@ -159,11 +160,29 @@ public class GameWindow extends JPanel{
 		
 		if(moving != 0) {
 			if(moving == 1) {
+				for(int i = 0; i < 8;i++) {
+					for(int j = 0; j < 8;j++) {
+						if(options[i][j]) {
+							g.setColor(new Color(255, 0, 0, 128));
+							g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
+						}
+					}
+				}
+				
 				g.setColor(new Color(0, 255, 0, 128));
 				g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
 			}
 			
 			if(moving == 2) {
+				for(int i = 0; i < 8;i++) {
+					for(int j = 0; j < 8;j++) {
+						if(options[i][j]) {
+							g.setColor(new Color(255, 0, 0, 128));
+							g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
+						}
+					}
+				}
+				
 				g.setColor(new Color(0, 255, 0, 255));
 				g.fillRect(px * 70 + 20, py * 70 + 20, 70, 70);
 				g.setColor(new Color(0, 255, 0, 128));
