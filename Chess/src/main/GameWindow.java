@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -151,6 +152,18 @@ public class GameWindow extends JPanel{
 		}
 	}
 	
+	public int checkGameOver() {
+		for(Piece p:player.board.deadPieces) {
+			if(p == Piece.B_KING) {
+				return 1;
+			} else if (p == Piece.W_KING) {
+				return 2;
+			}
+		}
+		
+		return 0;
+	}
+	
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(148, 74, 0));
 		g.fillRect(0, 0, 600, 600);
@@ -158,39 +171,56 @@ public class GameWindow extends JPanel{
 		g.fillRect(12, 12, 576, 576);
 		g.drawImage(bg, 20, 20, 560, 560, null);
 		
-		if(moving != 0) {
-			if(moving == 1) {
-				for(int i = 0; i < 8;i++) {
-					for(int j = 0; j < 8;j++) {
-						if(options[i][j]) {
-							g.setColor(new Color(255, 0, 0, 128));
-							g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
+		int check = checkGameOver();
+		
+		if(check == 0) {
+			if(moving != 0) {
+				if(moving == 1) {
+					for(int i = 0; i < 8;i++) {
+						for(int j = 0; j < 8;j++) {
+							if(options[i][j]) {
+								g.setColor(new Color(255, 0, 0, 128));
+								g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
+							}
 						}
 					}
+					
+					g.setColor(new Color(0, 255, 0, 128));
+					g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
 				}
 				
-				g.setColor(new Color(0, 255, 0, 128));
-				g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
+				if(moving == 2) {
+					for(int i = 0; i < 8;i++) {
+						for(int j = 0; j < 8;j++) {
+							if(options[i][j]) {
+								g.setColor(new Color(255, 0, 0, 128));
+								g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
+							}
+						}
+					}
+					
+					g.setColor(new Color(0, 255, 0, 255));
+					g.fillRect(px * 70 + 20, py * 70 + 20, 70, 70);
+					g.setColor(new Color(0, 255, 0, 128));
+					g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
+				}
 			}
 			
-			if(moving == 2) {
-				for(int i = 0; i < 8;i++) {
-					for(int j = 0; j < 8;j++) {
-						if(options[i][j]) {
-							g.setColor(new Color(255, 0, 0, 128));
-							g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
-						}
-					}
-				}
-				
-				g.setColor(new Color(0, 255, 0, 255));
-				g.fillRect(px * 70 + 20, py * 70 + 20, 70, 70);
-				g.setColor(new Color(0, 255, 0, 128));
-				g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
-			}
+			drawBoard(g);
+		} else if (check == 1) {
+			drawBoard(g);
+			
+			g.setColor(Color.black);
+			g.setFont(new Font("Arial", Font.BOLD, 80));
+			g.drawString("White won!", 40, 690);
+		} else if (check == 2) {
+			drawBoard(g);
+			
+			g.setColor(Color.black);
+			g.setFont(new Font("Arial", Font.BOLD, 80));
+			g.drawString("Black won!", 40, 690);
 		}
 		
-		drawBoard(g);
 		repaint();
 	}
 }

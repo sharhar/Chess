@@ -1,8 +1,12 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
 
 	public volatile Piece[][] pieces = new Piece[8][8];
+	public volatile List<Piece> deadPieces = new ArrayList<Piece>();
 	public int num;
 
 	public void resetBoard() {
@@ -56,6 +60,10 @@ public class Board {
 	}
 
 	public void move(int px, int py, int mx, int my) {
+		if(pieces[mx][my] != Piece.NOTHING) {
+			deadPieces.add(pieces[mx][my]);
+		}
+		
 		pieces[mx][my] = pieces[px][py];
 		pieces[px][py] = Piece.NOTHING;
 	}

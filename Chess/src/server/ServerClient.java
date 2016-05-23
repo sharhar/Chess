@@ -58,6 +58,14 @@ public class ServerClient implements Runnable{
 					sendData("CONNECT " + num);
 				} else if(input.startsWith("MOVE ")) {
 					server.sendToAll(input);
+					
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					server.nextMove();
 				}
 			} catch (IOException e) {
 				System.out.println("Could not connect to client " + socket.getInetAddress().toString());

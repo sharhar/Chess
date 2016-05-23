@@ -76,7 +76,7 @@ public class UserPlayer extends Player{
 			GameWindow.px = px;
 			GameWindow.py = py;
 			
-			selected = true;
+			selected = options[px][py];
 		}
 		
 		for(int i = 0;i < 8;i++) {
@@ -115,11 +115,12 @@ public class UserPlayer extends Player{
 			
 			Mouse.press = false;
 			
-			moved = true;
+			moved = options[GameWindow.mx][GameWindow.my];
 		}
-		GameWindow.moving = 0;
-		int[] result = {-1,-1,-1,-1};
 		
+		GameWindow.moving = 0;
+		
+		int[] result = {px,7 - py, GameWindow.mx, 7 - GameWindow.my};
 		return result;
 	}
 }

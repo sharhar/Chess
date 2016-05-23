@@ -1,0 +1,218 @@
+package main;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import game.Piece;
+import game.Player;
+import input.Mouse;
+
+public class GameWindow extends JPanel{
+	private static final long serialVersionUID = -3890124326645924014L;
+	
+	public JFrame frame;
+	public Player player;
+	public BufferedImage bg;
+	public BufferedImage spriteSheet;
+	public Piece[][] pieces = new Piece[8][8];
+	public BufferedImage[] pieceImages = new BufferedImage[12];
+	public static int moving = 0;
+	public static int px = -1, py = -1;
+	public static int mx = -1, my = -1;
+	public static volatile boolean[][] options = new boolean[8][8];
+	
+	private void createBG() {
+		int white = 0xffffff;
+		int black = 0x3a3a3a;
+		
+		for(int i = 0;i < 8;i++) {
+			for(int j = 0;j < 8;j++) {
+				bg.setRGB(i, j, black);
+			}
+		}
+		
+		bg.setRGB(0, 1, white);
+		bg.setRGB(0, 3, white);
+		bg.setRGB(0, 5, white);
+		bg.setRGB(0, 7, white);
+		
+		bg.setRGB(2, 1, white);
+		bg.setRGB(2, 3, white);
+		bg.setRGB(2, 5, white);
+		bg.setRGB(2, 7, white);
+		
+		bg.setRGB(4, 1, white);
+		bg.setRGB(4, 3, white);
+		bg.setRGB(4, 5, white);
+		bg.setRGB(4, 7, white);
+		
+		bg.setRGB(6, 1, white);
+		bg.setRGB(6, 3, white);
+		bg.setRGB(6, 5, white);
+		bg.setRGB(6, 7, white);
+		
+		bg.setRGB(1, 0, white);
+		bg.setRGB(1, 2, white);
+		bg.setRGB(1, 4, white);
+		bg.setRGB(1, 6, white);
+		
+		bg.setRGB(3, 0, white);
+		bg.setRGB(3, 2, white);
+		bg.setRGB(3, 4, white);
+		bg.setRGB(3, 6, white);
+		
+		bg.setRGB(5, 0, white);
+		bg.setRGB(5, 2, white);
+		bg.setRGB(5, 4, white);
+		bg.setRGB(5, 6, white);
+		
+		bg.setRGB(7, 0, white);
+		bg.setRGB(7, 2, white);
+		bg.setRGB(7, 4, white);
+		bg.setRGB(7, 6, white);
+	}
+	
+	private void getPieceImages() {
+		for(int i = 0;i < 12;i++) {
+			int x = i%6;
+			int y = (int) Math.floor(i/6.0);
+			
+			pieceImages[i] = spriteSheet.getSubimage(x * 333, y * 333, 333, 333);
+		}
+	}
+	
+	public GameWindow() {
+		frame = new JFrame("Chess");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(this);
+		frame.getContentPane().setPreferredSize(new Dimension(600, 700));
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.addMouseListener(new Mouse());
+		frame.addMouseMotionListener(new Mouse());
+		frame.setVisible(true);
+		
+		player = Main.user;
+		
+		bg = new BufferedImage(8, 8, BufferedImage.TYPE_INT_RGB);
+		try {
+			spriteSheet = ImageIO.read(GameWindow.class.getResourceAsStream("/pieces.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		createBG();
+		getPieceImages();
+	}
+	
+	public BufferedImage getPieceImage(Piece piece) {
+		if(piece == Piece.W_KING) {
+			return pieceImages[0];
+		} else if(piece == Piece.W_QUEEN) {
+			return pieceImages[1];
+		} else if(piece == Piece.W_BISHOP) {
+			return pieceImages[2];
+		} else if(piece == Piece.W_KNIGHT) {
+			return pieceImages[3];
+		} else if(piece == Piece.W_ROOK) {
+			return pieceImages[4];
+		} else if(piece == Piece.W_PAWN) {
+			return pieceImages[5];
+		} else if(piece == Piece.B_KING) {
+			return pieceImages[6];
+		} else if(piece == Piece.B_QUEEN) {
+			return pieceImages[7];
+		} else if(piece == Piece.B_BISHOP) {
+			return pieceImages[8];
+		} else if(piece == Piece.B_KNIGHT) {
+			return pieceImages[9];
+		} else if(piece == Piece.B_ROOK) {
+			return pieceImages[10];
+		} else if(piece == Piece.B_PAWN) {
+			return pieceImages[11];
+		} else {
+			return null;
+		}
+	}
+	
+	public void drawBoard(Graphics g) {
+		System.arraycopy(player.board.pieces, 0, pieces, 0, 8);
+		
+		for(int i = 0; i < 8;i++) {
+			for(int j = 0; j < 8;j++) {
+				g.drawImage(getPieceImage(pieces[i][j]), 20 + i * 70, 20 + (7 - j) * 70, 70, 70, null);
+			}
+		}
+	}
+	
+	public int checkGameOver() {
+		return 1;
+	}
+	
+	public void paintComponent(Graphics g) {
+		g.setColor(new Color(148, 74, 0));
+		g.fillRect(0, 0, 600, 600);
+		g.setColor(new Color(176, 108, 40));
+		g.fillRect(12, 12, 576, 576);
+		g.drawImage(bg, 20, 20, 560, 560, null);
+		
+		int check = checkGameOver();
+		
+		if(check == 0) {
+			if(moving != 0) {
+				if(moving == 1) {
+					for(int i = 0; i < 8;i++) {
+						for(int j = 0; j < 8;j++) {
+							if(options[i][j]) {
+								g.setColor(new Color(255, 0, 0, 128));
+								g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
+							}
+						}
+					}
+					
+					g.setColor(new Color(0, 255, 0, 128));
+					g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
+				}
+				
+				if(moving == 2) {
+					for(int i = 0; i < 8;i++) {
+						for(int j = 0; j < 8;j++) {
+							if(options[i][j]) {
+								g.setColor(new Color(255, 0, 0, 128));
+								g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
+							}
+						}
+					}
+					
+					g.setColor(new Color(0, 255, 0, 255));
+					g.fillRect(px * 70 + 20, py * 70 + 20, 70, 70);
+					g.setColor(new Color(0, 255, 0, 128));
+					g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
+				}
+			}
+			
+			drawBoard(g);
+		} else if (check == 1) {
+			drawBoard(g);
+			
+			g.setColor(Color.blue);
+			g.setFont(new Font("Arial", Font.BOLD, 80));
+			g.drawString("White won!", 40, 600);
+		} else if (check == 2) {
+			drawBoard(g);
+			
+			g.setColor(Color.blue);
+			g.setFont(new Font("Arial", Font.BOLD, 80));
+			g.drawString("Black won!", 40, 600);
+		}
+		
+		repaint();
+	}
+}

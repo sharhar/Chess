@@ -13,6 +13,7 @@ public class Server implements Runnable{
 	Thread thread;
 	boolean on;
 	int clientNum = 0;
+	int currentPlayer = 0;
 	
 	public Server(int port) {
 		ServerClient.server = this;
@@ -47,6 +48,12 @@ public class Server implements Runnable{
 		}
 	}
 	
+	public void nextMove() {
+		sendToAll("PLAY " + currentPlayer);
+		currentPlayer++;
+		currentPlayer = currentPlayer%2;
+	}
+	
 	public void run() {
 		while(on) {
 			try {
@@ -64,6 +71,14 @@ public class Server implements Runnable{
 					}
 					System.out.println("Starting game...");
 					sendToAll("START");
+					
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					nextMove();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
