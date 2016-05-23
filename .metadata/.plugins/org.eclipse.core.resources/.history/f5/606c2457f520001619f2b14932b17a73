@@ -1,0 +1,27 @@
+package game;
+
+import input.Mouse;
+
+public class UserPlayer extends Player{
+	
+	public UserPlayer(String address, int port) {
+		super(address, port);
+	}
+
+	public int[] move() {
+		int cx = Mouse.cx;
+		int cy = Mouse.cy;
+		
+		if(cx == Mouse.lcx && cy == Mouse.lcy) {
+			int[] result = {-1,-1,-1,-1};
+			return result;
+		}
+		
+		int px = cx - 20;
+		int py = (cy - 20);
+		
+		int[] result = {0,0,0,0};
+		
+		return result;
+	}
+}

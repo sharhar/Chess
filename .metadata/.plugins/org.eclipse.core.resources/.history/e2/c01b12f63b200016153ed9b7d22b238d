@@ -1,9 +1,0 @@
-package client;
-
-public class Client {
-	Socket socket;
-	
-	public Client(int port) {
-		
-	}
-}

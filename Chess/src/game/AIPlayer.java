@@ -7,7 +7,7 @@ public class AIPlayer extends Player{
 	}
 
 	public int[] move() {
-		int[] result = {0,0,0,0};
+		int[] result = {-1,-1,-1,-1};
 		return result;
 	}
 

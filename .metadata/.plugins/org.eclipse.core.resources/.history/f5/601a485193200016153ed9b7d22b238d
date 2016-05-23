@@ -1,9 +1,0 @@
-package main;
-
-public class GameWindow {
-	
-	public JFrame frame;
-	
-	
-	
-}

@@ -1,13 +1,12 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import game.Player;
+import game.UserPlayer;
 import server.Server;
 
 public class Main {
-	public static List<Player> players = new ArrayList<Player>();
+	public static UserPlayer user;
+	public static Player other = null;
 	public static Server server;
 	public static Menu menu;
 	

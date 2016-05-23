@@ -54,7 +54,7 @@ public class JoinGame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String adress = txtAdress.getText();
 				int port = Integer.parseInt(txtPort.getText());
-				Main.players.add(new UserPlayer(adress, port));
+				Main.user = new UserPlayer(adress, port);
 				new GameWindow();
 				dispose();
 			}

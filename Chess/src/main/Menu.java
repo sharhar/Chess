@@ -37,8 +37,8 @@ public class Menu extends JFrame {
 		btnVersusAi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.startServer(52000);
-				Main.players.add(new UserPlayer("localhost", 52000));
-				Main.players.add(new AIPlayer("localhost", 52000));
+				Main.user = new UserPlayer("localhost", 52000);
+				Main.other = new AIPlayer("localhost", 52000);
 				new GameWindow();
 				dispose();
 			}
@@ -50,8 +50,8 @@ public class Menu extends JFrame {
 		btnLocalMultiplayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.startServer(52000);
-				Main.players.add(new UserPlayer("localhost", 52000));
-				Main.players.add(new UserPlayer("localhost", 52000));
+				Main.user = new UserPlayer("localhost", 52000);
+				Main.other = new UserPlayer("localhost", 52000);
 				new GameWindow();
 				dispose();
 			}

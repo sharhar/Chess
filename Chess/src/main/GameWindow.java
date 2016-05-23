@@ -23,6 +23,9 @@ public class GameWindow extends JPanel{
 	public BufferedImage spriteSheet;
 	public Piece[][] pieces = new Piece[8][8];
 	public BufferedImage[] pieceImages = new BufferedImage[12];
+	public static int moving = 0;
+	public static int px = -1, py = -1;
+	public static int mx = -1, my = -1;
 	
 	private void createBG() {
 		int white = 0xffffff;
@@ -92,9 +95,10 @@ public class GameWindow extends JPanel{
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.addMouseListener(new Mouse());
+		frame.addMouseMotionListener(new Mouse());
 		frame.setVisible(true);
 		
-		player = Main.players.get(0);
+		player = Main.user;
 		
 		bg = new BufferedImage(8, 8, BufferedImage.TYPE_INT_RGB);
 		try {
@@ -152,13 +156,22 @@ public class GameWindow extends JPanel{
 		g.setColor(new Color(176, 108, 40));
 		g.fillRect(12, 12, 576, 576);
 		g.drawImage(bg, 20, 20, 560, 560, null);
+		
+		if(moving != 0) {
+			if(moving == 1) {
+				g.setColor(new Color(0, 255, 0, 128));
+				g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
+			}
+			
+			if(moving == 2) {
+				g.setColor(new Color(0, 255, 0, 255));
+				g.fillRect(px * 70 + 20, py * 70 + 20, 70, 70);
+				g.setColor(new Color(0, 255, 0, 128));
+				g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
+			}
+		}
+		
 		drawBoard(g);
 		repaint();
-		
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }

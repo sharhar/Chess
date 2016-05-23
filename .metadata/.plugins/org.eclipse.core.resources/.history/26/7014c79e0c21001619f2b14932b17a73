@@ -1,0 +1,39 @@
+package game;
+
+import input.Mouse;
+
+public class UserPlayer extends Player{
+	
+	public UserPlayer(String address, int port) {
+		super(address, port);
+	}
+
+	public int[] move() {
+		int x = Mouse.x;
+		int y = Mouse.y;
+		
+		int mx = (int) Math.round((x - 0)/70.0) - 1;
+		int my = (int) Math.round((y - 0)/70.0) - 1;
+		
+		if(mx < 0) {
+			mx = 0;
+		}
+		if(my < 0) {
+			my = 0;
+		}
+		if(mx > 7) {
+			mx = 7;
+		}
+		if(my > 7) {
+			my = 7;
+		}
+		
+		while(!Mouse.press) {
+			
+		}
+		
+		int[] result = {0,0,0,0};
+		
+		return result;
+	}
+}

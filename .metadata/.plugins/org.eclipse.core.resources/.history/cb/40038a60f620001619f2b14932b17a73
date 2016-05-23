@@ -1,0 +1,31 @@
+package game;
+
+import input.Mouse;
+
+public class UserPlayer extends Player{
+	
+	public UserPlayer(String address, int port) {
+		super(address, port);
+	}
+
+	public int[] move() {
+		int cx = Mouse.cx;
+		int cy = Mouse.cy;
+		
+		if(cx == Mouse.lcx && cy == Mouse.lcy) {
+			int[] result = {-1,-1,-1,-1};
+			return result;
+		}
+		
+		System.out.println("CY: " + (cy - 20)/70.0);
+		
+		int px = (int) Math.round((cx - 20)/70.0);
+		int py = (int) Math.round((cy - 20)/70.0);
+		
+		System.out.println(px + " " + py);
+		
+		int[] result = {0,0,0,0};
+		
+		return result;
+	}
+}

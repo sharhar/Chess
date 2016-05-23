@@ -1,0 +1,21 @@
+package game;
+
+import input.Mouse;
+
+public class UserPlayer extends Player{
+	
+	boolean moving = false;
+	
+	public UserPlayer(String address, int port) {
+		super(address, port);
+	}
+
+	public int[] move() {
+		int cx = Mouse.cx;
+		int cy = Mouse.cy;
+		
+		int[] result = {0,0,0,0};
+		
+		return result;
+	}
+}

@@ -43,7 +43,7 @@ public class CreateGame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int port = Integer.parseInt(txtPort.getText());
 				Main.startServer(port);
-				Main.players.add(new UserPlayer("localhost", port));
+				Main.user = new UserPlayer("localhost", port);
 				new GameWindow();
 				dispose();
 			}
