@@ -1,0 +1,19 @@
+package main;
+
+import game.Player;
+import game.UserPlayer;
+import server.Server;
+
+public class Main {
+	public static Player player;
+	public static Player player2;
+	public static Server server;
+	
+	public static void main(String[] args) {
+		//server = new Server(52000);
+		//server.start();
+		
+		//player = new UserPlayer("localhost", 52000);
+		//player2 = new UserPlayer("localhost", 52000);
+	}
+}

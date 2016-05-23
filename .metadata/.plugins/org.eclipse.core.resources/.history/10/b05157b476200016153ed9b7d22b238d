@@ -1,0 +1,10 @@
+package game;
+
+import java.util.List;
+
+import client.Client;
+
+public abstract class Player {
+	public Client client;
+	public List<Piece> pieces;
+}

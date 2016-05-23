@@ -1,0 +1,15 @@
+package game;
+
+import client.Client;
+
+public class UserPlayer extends Player{
+	
+	public UserPlayer(Client client) {
+		super(client);
+		client.start();
+	}
+
+	public void move() {
+		
+	}
+}

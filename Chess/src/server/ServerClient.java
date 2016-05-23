@@ -14,8 +14,9 @@ public class ServerClient implements Runnable{
 	PrintWriter out;
 	BufferedReader in;
 	boolean ready = false;
+	int num;
 	
-	public ServerClient(Socket socket) {
+	public ServerClient(Socket socket, int num) {
 		System.out.println("New client at " + socket.getInetAddress().toString());
 		this.socket = socket;
 		this.thread = new Thread(this);
@@ -27,6 +28,7 @@ public class ServerClient implements Runnable{
 			e.printStackTrace();
 		}
 		
+		this.num = num;
 	}
 	
 	public void start() {
@@ -47,16 +49,13 @@ public class ServerClient implements Runnable{
 		out.println(data);
 	}
 	
-	public boolean ready() {
-		return ready;
-	}
-	
 	public void run() {
-		ready = true;
 		while(on) {
 			try {
 				String input = in.readLine();
-				System.out.println("Client " + socket.getInetAddress().toString() + " sent: " + input);
+				if(input.equals("CONNECT")) {
+					sendData("CONNECT " + num);
+				}
 			} catch (IOException e) {
 				System.out.println("Could not connect to client " + socket.getInetAddress().toString());
 				e.printStackTrace();

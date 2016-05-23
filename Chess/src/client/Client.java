@@ -9,12 +9,14 @@ import java.net.UnknownHostException;
 
 public class Client implements Runnable{
 	Socket socket;
-	Thread thread;
+	Thread listen;
+	Thread send;
 	boolean on;
 	PrintWriter out;
 	BufferedReader in;
+	ClientImpl impl;
 	
-	public Client(String address, int port) {
+	public Client(String address, int port, ClientImpl impl) {
 		try {
 			socket = new Socket(address, port);
 		} catch (UnknownHostException e) {
@@ -23,7 +25,9 @@ public class Client implements Runnable{
 			e.printStackTrace();
 		}
 		
-		thread = new Thread(this);
+		this.impl = impl;
+		
+		listen = new Thread(this);
 		
 		try {
 			out = new PrintWriter(socket.getOutputStream(), true);
@@ -32,17 +36,30 @@ public class Client implements Runnable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		send = new Thread(() -> {
+			while(on) {
+				impl.send(this);
+				
+				try {
+					Thread.sleep(10);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	public void start() {
 		on = true;
-		thread.start();
+		listen.start();
+		send.start();
 	}
 	
 	public void stop() {
 		on = false;
 		try {
-			thread.join();
+			listen.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -62,7 +79,7 @@ public class Client implements Runnable{
 		while(on) {
 			 try {
 				String input = in.readLine();
-				System.out.println("Server sent " + input);
+				impl.listen(this, input);
 			 } catch (IOException e1) {
 				e1.printStackTrace();
 			}

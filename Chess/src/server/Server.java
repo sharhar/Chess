@@ -12,6 +12,7 @@ public class Server implements Runnable{
 	ServerSocket server;
 	Thread thread;
 	boolean on;
+	int clientNum = 0;
 	
 	public Server(int port) {
 		try {
@@ -48,10 +49,10 @@ public class Server implements Runnable{
 		while(on) {
 			try {
 				Socket clientSocket = server.accept();
-				ServerClient client = new ServerClient(clientSocket);
+				ServerClient client = new ServerClient(clientSocket, clientNum);
 				client.start();
-				while(!client.ready()) {} 
 				clients.add(client);
+				clientNum++;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

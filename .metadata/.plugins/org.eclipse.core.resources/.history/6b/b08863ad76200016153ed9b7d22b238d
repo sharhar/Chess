@@ -1,0 +1,7 @@
+package game;
+
+import client.Client;
+
+public abstract class Player {
+	public Client client;
+}

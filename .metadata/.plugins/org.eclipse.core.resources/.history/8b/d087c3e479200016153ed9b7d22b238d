@@ -1,0 +1,17 @@
+package game;
+
+import client.Client;
+
+public class UserPlayer extends Player{
+	
+	public UserPlayer(String address, int port) {
+		this.client = new Client(address, port, this);
+		this.client.start();
+	}
+
+	public void move() {
+		
+	}
+	
+	
+}

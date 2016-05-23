@@ -1,0 +1,9 @@
+package game;
+
+public class Piece {
+	
+	public static int TYPE_PAWN = 0;
+	
+	public int x, y;
+	
+}

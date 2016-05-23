@@ -1,0 +1,6 @@
+package client;
+
+public interface ClientImpl {
+	public void send();
+	public void listen();
+}

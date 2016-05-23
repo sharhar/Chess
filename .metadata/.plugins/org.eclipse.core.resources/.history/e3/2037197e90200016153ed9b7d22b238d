@@ -1,0 +1,27 @@
+package main;
+
+import javax.swing.JFrame;
+
+import game.Player;
+import game.UserPlayer;
+import server.Server;
+
+public class Main {
+	public static UserPlayer player;
+	public static Player player2;
+	public static Server server;
+	
+	public static JFrame frame;
+	
+	public void startNet() {
+		//server = new Server(52000);
+		//server.start();
+				
+		//player = new UserPlayer("localhost", 52000);
+		//player2 = new UserPlayer("localhost", 52000);
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+}

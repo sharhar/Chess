@@ -1,0 +1,15 @@
+package game;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import client.Client;
+import client.ClientImpl;
+
+public abstract class Player implements ClientImpl{
+	public Client client;
+	public List<Piece> pieces = new ArrayList<Piece>();
+	public int id;
+	
+	public abstract void move();
+}

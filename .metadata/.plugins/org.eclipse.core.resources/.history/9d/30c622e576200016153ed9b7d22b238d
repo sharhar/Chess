@@ -1,0 +1,18 @@
+package game;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import client.Client;
+
+public abstract class Player {
+	public Client client;
+	public List<Piece> pieces;
+	
+	public Player(Client client) {
+		this.client = client;
+		pieces = new ArrayList<Piece>();
+	}
+	
+	public abstract void move();
+}

@@ -1,0 +1,20 @@
+package main;
+
+import game.Player;
+import server.Server;
+
+public class Main {
+	public static Player player;
+	public static Server server;
+	
+	public static void net() {
+		server = new Server(52000);
+		server.start();
+	}
+	
+	public static void main(String[] args) {
+		net();
+		
+		
+	}
+}

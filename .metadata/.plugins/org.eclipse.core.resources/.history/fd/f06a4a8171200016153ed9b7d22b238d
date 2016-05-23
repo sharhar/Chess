@@ -1,0 +1,14 @@
+package game;
+
+public class Piece {
+	
+	public static int TYPE_PAWN = 0;
+	public static int TYPE_ROOK = 0;
+	public static int TYPE_KNGT = 0;
+	public static int TYPE_BSHP = 0;
+	public static int TYPE_KING = 0;
+	public static int TYPE_QUEN = 0;
+	
+	public int x, y;
+	
+}
