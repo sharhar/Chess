@@ -28,7 +28,7 @@ public class GameWindow extends JPanel{
 	public static int px = -1, py = -1;
 	public static int mx = -1, my = -1;
 	public static volatile boolean[][] options = new boolean[8][8];
-	public static volatile String bottomText = "Waiting for player...";
+	public static volatile String bottomText = "Waiting for player!";
 	
 	private void createBG() {
 		int white = 0xffffff;
@@ -165,16 +165,13 @@ public class GameWindow extends JPanel{
 		return 0;
 	}
 	
-	public void bottomText(Graphics g) {
+	public void bottomText() {
 		g.setColor(Color.black);
-		g.setFont(new Font("Arial", Font.BOLD, 56));
-		g.drawString(bottomText, 40, 690);
+		g.setFont(new Font("Arial", Font.BOLD, 80));
+		g.drawString("White won!", 40, 690);
 	}
 	
 	public void paintComponent(Graphics g) {
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 600, 700);
-		
 		g.setColor(new Color(148, 74, 0));
 		g.fillRect(0, 0, 600, 600);
 		g.setColor(new Color(176, 108, 40));
@@ -220,14 +217,16 @@ public class GameWindow extends JPanel{
 		} else if (check == 1) {
 			drawBoard(g);
 			
-			bottomText = "White won!";
+			g.setColor(Color.black);
+			g.setFont(new Font("Arial", Font.BOLD, 80));
+			g.drawString("White won!", 40, 690);
 		} else if (check == 2) {
 			drawBoard(g);
 			
-			bottomText = "Black won!";
+			g.setColor(Color.black);
+			g.setFont(new Font("Arial", Font.BOLD, 80));
+			g.drawString("Black won!", 40, 690);
 		}
-		
-		bottomText(g);
 		
 		repaint();
 	}

@@ -2,7 +2,6 @@ package game;
 
 import client.Client;
 import client.ClientImpl;
-import main.GameWindow;
 
 public abstract class Player implements ClientImpl{
 	public Client client;
@@ -47,13 +46,6 @@ public abstract class Player implements ClientImpl{
 			String[] parts = data.split(" ");
 			
 			int num = Integer.parseInt(parts[1]);
-			
-			if(num == 0) {
-				GameWindow.bottomText = "White's turn...";
-			} else if(num == 1) {
-				GameWindow.bottomText = "Black's turn...";
-			}
-			
 			if(num == id) {
 				int[] moved = move();
 				client.sendData("MOVE " + moved[0] + " " + moved[1] + " " + moved[2] + " " + moved[3]);

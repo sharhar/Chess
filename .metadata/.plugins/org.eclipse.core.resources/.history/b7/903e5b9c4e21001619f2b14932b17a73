@@ -28,7 +28,7 @@ public class GameWindow extends JPanel{
 	public static int px = -1, py = -1;
 	public static int mx = -1, my = -1;
 	public static volatile boolean[][] options = new boolean[8][8];
-	public static volatile String bottomText = "Waiting for player...";
+	public static volatile String bottomText = "Waiting for player!";
 	
 	private void createBG() {
 		int white = 0xffffff;
@@ -167,13 +167,13 @@ public class GameWindow extends JPanel{
 	
 	public void bottomText(Graphics g) {
 		g.setColor(Color.black);
-		g.setFont(new Font("Arial", Font.BOLD, 56));
+		g.setFont(new Font("Arial", Font.BOLD, 80));
 		g.drawString(bottomText, 40, 690);
 	}
 	
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.white);
-		g.fillRect(0, 0, 600, 700);
+		g.fillRect(0, 0, 600, 600);
 		
 		g.setColor(new Color(148, 74, 0));
 		g.fillRect(0, 0, 600, 600);
