@@ -96,6 +96,7 @@ public class GameWindow extends JPanel{
 		frame.add(this);
 		frame.getContentPane().setPreferredSize(new Dimension(600, 700));
 		frame.pack();
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.addMouseListener(new Mouse());
 		frame.addMouseMotionListener(new Mouse());
@@ -186,15 +187,6 @@ public class GameWindow extends JPanel{
 		if(check == 0) {
 			if(moving != 0) {
 				if(moving == 1) {
-					for(int i = 0; i < 8;i++) {
-						for(int j = 0; j < 8;j++) {
-							if(options[i][j]) {
-								g.setColor(new Color(255, 0, 0, 64));
-								g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
-							}
-						}
-					}
-					
 					g.setColor(new Color(0, 255, 0, 128));
 					g.fillRect(mx * 70 + 20, my * 70 + 20, 70, 70);
 				}
@@ -203,7 +195,7 @@ public class GameWindow extends JPanel{
 					for(int i = 0; i < 8;i++) {
 						for(int j = 0; j < 8;j++) {
 							if(options[i][j]) {
-								g.setColor(new Color(255, 0, 0, 64));
+								g.setColor(new Color(255, 0, 0, 128));
 								g.fillRect(i * 70 + 20, j * 70 + 20, 70, 70);
 							}
 						}

@@ -9,9 +9,7 @@ public class UserPlayer extends Player{
 		super(address, port);
 	}
 
-	public int[] move() {
-		boolean selected = false;
-		boolean moved = false;
+	public int[] selectPiece() {
 		boolean[][] options = new boolean[8][8];
 		
 		for(int i = 0;i < 8;i++) {
@@ -20,7 +18,7 @@ public class UserPlayer extends Player{
 			}
 		}
 		
-		System.arraycopy(options, 0, GameWindow.options, 0, 8);
+		boolean selected = false;
 		
 		GameWindow.moving = 1;
 		
@@ -79,6 +77,23 @@ public class UserPlayer extends Player{
 			selected = options[px][py];
 		}
 		
+		int[] result = {px, py};
+		return result;
+	}
+	
+	public int[] move(int px, int py) {
+		GameWindow.px = px;
+		GameWindow.py = py;
+		
+		boolean moved = false;
+		boolean[][] options = new boolean[8][8];
+		
+		for(int i = 0;i < 8;i++) {
+			for(int j = 0;j < 8;j++) {
+				options[i][j] = board.isMine(id, i, 7 - j);
+			}
+		}
+		
 		for(int i = 0;i < 8;i++) {
 			for(int j = 0;j < 8;j++) {
 				options[i][j] = board.isLegalMove(id, px, 7 - py, i, 7 - j);
@@ -115,7 +130,74 @@ public class UserPlayer extends Player{
 			
 			Mouse.press = false;
 			
-			moved = options[GameWindow.mx][GameWindow.my];
+			if(board.isMine(id, GameWindow.mx, 7 - GameWindow.my)) {
+				return move(GameWindow.mx, GameWindow.my);
+			} else {
+				moved = options[GameWindow.mx][GameWindow.my];
+			}
+		}
+		
+		GameWindow.moving = 0;
+		
+		int[] result = {px,7 - py, GameWindow.mx, 7 - GameWindow.my};
+		return result;
+	}
+	
+	public int[] move() {
+		boolean moved = false;
+		boolean[][] options = new boolean[8][8];
+		
+		for(int i = 0;i < 8;i++) {
+			for(int j = 0;j < 8;j++) {
+				options[i][j] = board.isMine(id, i, 7 - j);
+			}
+		}
+		
+		int[] p = selectPiece();
+		int px = p[0];
+		int py = p[1];
+		
+		for(int i = 0;i < 8;i++) {
+			for(int j = 0;j < 8;j++) {
+				options[i][j] = board.isLegalMove(id, px, 7 - py, i, 7 - j);
+			}
+		}
+		
+		System.arraycopy(options, 0, GameWindow.options, 0, 8);
+		
+		GameWindow.moving = 2;
+		while(!moved) {
+			while(!Mouse.press) {
+				int x = Mouse.x;
+				int y = Mouse.y;
+				
+				int mx = (int) Math.round((x + 7)/70.0) - 1;
+				int my = (int) Math.round((y - 15)/70.0) - 1;
+				
+				if(mx < 0) {
+					mx = 0;
+				}
+				if(my < 0) {
+					my = 0;
+				}
+				if(mx > 7) {
+					mx = 7;
+				}
+				if(my > 7) {
+					my = 7;
+				}
+				
+				GameWindow.mx = mx;
+				GameWindow.my = my;
+			}
+			
+			Mouse.press = false;
+			
+			if(board.isMine(id, GameWindow.mx, 7 - GameWindow.my)) {
+				return move(GameWindow.mx, GameWindow.my);
+			} else {
+				moved = options[GameWindow.mx][GameWindow.my];
+			}
 		}
 		
 		GameWindow.moving = 0;

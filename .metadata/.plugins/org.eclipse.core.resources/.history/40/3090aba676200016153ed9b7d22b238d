@@ -1,7 +1,0 @@
-package game;
-
-import client.Client;
-
-public abstract class Player {
-	Client client;
-}

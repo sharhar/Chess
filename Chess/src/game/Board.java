@@ -8,7 +8,7 @@ public class Board {
 	public volatile Piece[][] pieces = new Piece[8][8];
 	public volatile List<Piece> deadPieces = new ArrayList<Piece>();
 	public int num;
-
+	
 	public void resetBoard() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -83,18 +83,159 @@ public class Board {
 		} 
 		return false;
 	}
+	
+	public boolean isDiagonal(int px, int py, int mx, int my) {
+		int dx = mx - px;
+		int dy = my - py;
+		
+		if(Math.abs(dx) == Math.abs(dy)) {
+			int distance = Math.abs(dx);
+			
+			int sx = (int) Math.signum(dx);
+			int sy = (int) Math.signum(dy);
+			
+			
+			for(int i = 1;i < distance;i++) {
+				if(pieces[px + i*sx][py + i*sy] != Piece.NOTHING) {
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean isStraight(int px, int py, int mx, int my) {
+		int dx = mx - px;
+		int dy = my - py;
+		
+		if(dx == 0 || dy == 0) {
+			int distance = Math.abs(dx + dy);
+			
+			int sx = (int) Math.signum(dx);
+			int sy = (int) Math.signum(dy);
+			
+			
+			for(int i = 1;i < distance;i++) {
+				if(pieces[px + i*sx][py + i*sy] != Piece.NOTHING) {
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		return false;
+	}
 
 	public boolean isLegalMove(int num, int px, int py, int mx, int my) {
 		if(px == mx && py == my) {
 			return false;
 		}
 		
-		//Piece piece = pieces[px][py];
-		//Piece other = pieces[mx][my];
-		
 		if(isMine(num, mx, my)) {
 			return false;
 		}
+		
+
+		Piece piece = pieces[px][py];
+		
+		if(piece == Piece.W_PAWN) {
+			int dx = mx - px;
+			int dy = my - py;
+			
+			if(dy < 1) {
+				return false;
+			}
+			
+			if(dx == 0) {
+				if(pieces[mx][my] != Piece.NOTHING) {
+					return false;
+				}
+				
+				if(py == 1) {
+					if(dy == 2 && pieces[mx][my-1] != Piece.NOTHING) {
+						return false;
+					}
+					
+					return dy == 1 || dy == 2;
+				} else {
+					return dy == 1;
+				}
+			} else if(Math.abs(dx) == 1) {
+				if(dy > 1) {
+					return false;
+				}
+				
+				if(pieces[mx][my] == Piece.NOTHING) {
+					return false;
+				}
+				
+				return true;
+			}
+			
+			return false;
+		} else if(piece == Piece.B_PAWN) {
+			int dx = mx - px;
+			int dy = my - py;
+			
+			if(dy > 1) {
+				return false;
+			}
+			
+			if(dx == 0) {
+				if(pieces[mx][my] != Piece.NOTHING) {
+					return false;
+				}
+				
+				if(py == 6) {
+					if(dy == -2 && pieces[mx][my+1] != Piece.NOTHING) {
+						return false;
+					}
+					
+					return dy == -1 || dy == -2;
+				} else {
+					return dy == -1;
+				}
+			} else if(Math.abs(dx) == 1) {
+				if(dy < 1) {
+					return false;
+				}
+				
+				if(pieces[mx][my] == Piece.NOTHING) {
+					return false;
+				}
+				
+				return true;
+			}
+			
+			return false;
+		} else if(piece == Piece.B_ROOK || piece == Piece.W_ROOK) {
+			return isStraight(px, py, mx, my);
+		} else if(piece == Piece.B_KNIGHT || piece == Piece.W_KNIGHT) {
+			if(Math.abs(px - mx) == 1) {
+				return Math.abs(py - my) == 2;
+			} else if (Math.abs(px - mx) == 2) {
+				return Math.abs(py - my) == 1;
+			}
+			
+			return false;
+		} else if (piece == Piece.B_BISHOP || piece == Piece.W_BISHOP) {
+			return isDiagonal(px, py, mx, my);
+		} else if (piece == Piece.B_QUEEN || piece == Piece.W_QUEEN) {
+			return isDiagonal(px, py, mx, my) || isStraight(px, py, mx, my);
+		} else if (piece == Piece.B_KING || piece == Piece.W_KING) {
+			int dx = Math.abs(mx - px);
+			int dy = Math.abs(my - py);
+			
+			if(dx > 1 || dy > 1) {
+				return false;
+			}
+			
+			return true;
+		}
+		
 		return true;
 	}
 }

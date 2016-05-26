@@ -1,0 +1,128 @@
+package game;
+
+import input.Mouse;
+import main.GameWindow;
+
+public class UserPlayer extends Player{
+	
+	public UserPlayer(String address, int port) {
+		super(address, port);
+	}
+
+	public void selectPiece() {
+		
+	}
+	
+	public int[] move() {
+		boolean selected = false;
+		boolean moved = false;
+		boolean[][] options = new boolean[8][8];
+		
+		for(int i = 0;i < 8;i++) {
+			for(int j = 0;j < 8;j++) {
+				options[i][j] = board.isMine(id, i, 7 - j);
+			}
+		}
+		
+		GameWindow.moving = 1;
+		
+		int px = -1;
+		int py = -1;
+		
+		while(!selected) {
+			while(!Mouse.press) {
+				int x = Mouse.x;
+				int y = Mouse.y;
+				
+				int mx = (int) Math.round((x + 7)/70.0) - 1;
+				int my = (int) Math.round((y - 15)/70.0) - 1;
+				
+				if(mx < 0) {
+					mx = 0;
+				}
+				if(my < 0) {
+					my = 0;
+				}
+				if(mx > 7) {
+					mx = 7;
+				}
+				if(my > 7) {
+					my = 7;
+				}
+				
+				GameWindow.mx = mx;
+				GameWindow.my = my;
+			}
+			
+			Mouse.press = false;
+			
+			int cx = Mouse.cx;
+			int cy = Mouse.cy;
+			
+			px = (int) Math.round((cx + 7)/70.0) - 1;
+			py = (int) Math.round((cy - 15)/70.0) - 1;
+			
+			if(px < 0) {
+				px = 0;
+			}
+			if(py < 0) {
+				py = 0;
+			}
+			if(px > 7) {
+				px = 7;
+			}
+			if(py > 7) {
+				py = 7;
+			} 
+			
+			GameWindow.px = px;
+			GameWindow.py = py;
+			
+			selected = options[px][py];
+		}
+		
+		for(int i = 0;i < 8;i++) {
+			for(int j = 0;j < 8;j++) {
+				options[i][j] = board.isLegalMove(id, px, 7 - py, i, 7 - j);
+			}
+		}
+		
+		System.arraycopy(options, 0, GameWindow.options, 0, 8);
+		
+		GameWindow.moving = 2;
+		while(!moved) {
+			while(!Mouse.press) {
+				int x = Mouse.x;
+				int y = Mouse.y;
+				
+				int mx = (int) Math.round((x + 7)/70.0) - 1;
+				int my = (int) Math.round((y - 15)/70.0) - 1;
+				
+				if(mx < 0) {
+					mx = 0;
+				}
+				if(my < 0) {
+					my = 0;
+				}
+				if(mx > 7) {
+					mx = 7;
+				}
+				if(my > 7) {
+					my = 7;
+				}
+				
+				GameWindow.mx = mx;
+				GameWindow.my = my;
+			}
+			
+			Mouse.press = false;
+			
+			moved = options[GameWindow.mx][GameWindow.my];
+		}
+		
+		GameWindow.moving = 0;
+		
+		int[] result = {px,7 - py, GameWindow.mx, 7 - GameWindow.my};
+		return result;
+	}
+}
