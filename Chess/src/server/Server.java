@@ -48,6 +48,16 @@ public class Server implements Runnable{
 		}
 	}
 	
+	public boolean allMoved() {
+		if(clients.get(0).moved && clients.get(1).moved) {
+			clients.get(0).moved = false;
+			clients.get(1).moved = false;
+			
+			return true;
+		}
+		return false;
+	}
+	
 	public void nextMove() {
 		sendToAll("PLAY " + currentPlayer);
 		currentPlayer++;
@@ -64,29 +74,20 @@ public class Server implements Runnable{
 				clientNum++;
 				
 				if(clientNum == 2) {
-					try {
-						Thread.sleep(15);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					System.out.println("Starting game...");
-					sendToAll("START");
 					
-					try {
-						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+					while(!clients.get(0).ready() || !clients.get(1).ready()) {
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
+					
+					System.out.println("Starting game...");
 					
 					nextMove();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}

@@ -30,6 +30,7 @@ public abstract class Player implements ClientImpl{
 			board = new Board(this.id);
 			System.out.println("I am player " + id + "!");
 			ready = true;
+			client.sendData("READY");
 		} else if(data.equals("START")) {
 			started = true;
 		} else if (data.startsWith("MOVE ")) {
@@ -43,6 +44,8 @@ public abstract class Player implements ClientImpl{
 			if(moved[0] != -1) {
 				board.move(moved[0], moved[1], moved[2], moved[3]);
 			}
+			
+			client.sendData("MOVED");
 		} else if (data.startsWith("PLAY ")) {
 			String[] parts = data.split(" ");
 			

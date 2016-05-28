@@ -16,6 +16,8 @@ public class ServerClient implements Runnable{
 	boolean ready = false;
 	int num;
 	public static Server server;
+	Thread moveThread;
+	public boolean moved = false;
 	
 	public ServerClient(Socket socket, int num) {
 		System.out.println("New client at " + socket.getInetAddress().toString());
@@ -50,31 +52,38 @@ public class ServerClient implements Runnable{
 		out.println(data);
 	}
 	
+	public boolean ready() {
+		return ready;
+	}
+	
 	public void run() {
 		while(on) {
 			try {
 				String input = in.readLine();
 				if(input.equals("CONNECT")) {
 					sendData("CONNECT " + num);
+				} else if (input.equals("READY")) {
+					ready = true;
 				} else if(input.startsWith("MOVE ")) {
-					server.sendToAll(input);
-					
-					try {
-						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					
-					server.nextMove();
+					moveThread = new Thread(() -> {
+						server.sendToAll(input);
+						
+						while(!server.allMoved()) {
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						
+						server.nextMove();
+					});
+					moveThread.start();
+				} else if (input.equals("MOVED")) {
+					moved = true;
 				}
 			} catch (IOException e) {
 				System.out.println("Could not connect to client " + socket.getInetAddress().toString());
-				e.printStackTrace();
-			}
-			
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}

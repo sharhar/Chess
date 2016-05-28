@@ -33,8 +33,8 @@
 <fullyQualifiedTypeName name="java.awt.event.MouseMotionListener"/>
 <fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="input.Mouse"/>
-<fullyQualifiedTypeName name="game.Piece"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.awt.Font"/>
 <fullyQualifiedTypeName name="main.GameWindow"/>
+<fullyQualifiedTypeName name="game.Piece"/>
 </qualifiedTypeNameHistroy>
