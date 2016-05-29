@@ -37,4 +37,5 @@
 <fullyQualifiedTypeName name="java.awt.Font"/>
 <fullyQualifiedTypeName name="main.GameWindow"/>
 <fullyQualifiedTypeName name="game.Piece"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
 </qualifiedTypeNameHistroy>
